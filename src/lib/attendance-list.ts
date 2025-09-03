@@ -11,8 +11,8 @@ export type StudentAttendanceRow = {
 export async function getStudentAttendanceRows(params?: { start?: Date; end?: Date }) {
   const now = new Date();
   const start = params?.start ?? new Date(now.getFullYear(), now.getMonth(), 1);
-  const end   = params?.end   ?? new Date(now.getFullYear(), now.getMonth() + 1, 0);
-  const endEx = new Date(end); endEx.setDate(endEx.getDate() + 1); // exclusive
+  const end = params?.end ?? new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const endExclusive = new Date(end); endExclusive.setDate(endExclusive.getDate() + 1);
 
   const students = await prisma.student.findMany({
     select: { id: true, firstname: true, lastname: true },
@@ -22,7 +22,7 @@ export async function getStudentAttendanceRows(params?: { start?: Date; end?: Da
 
   const grouped = await prisma.attendance.groupBy({
     by: ["studentId", "status"],
-    where: { date: { gte: start, lt: endEx } },
+    where: { date: { gte: start, lt: endExclusive } },
     _count: { _all: true },
   });
 
@@ -40,7 +40,7 @@ export async function getStudentAttendanceRows(params?: { start?: Date; end?: Da
   return students.map((s) => {
     const c = counts.get(s.id)!;
     return {
-      student: { ...s, img: null }, // your columns expect .img; we fill null
+      student: { ...s, img: null },
       totalAttendance: c.P,
       totalAbsent: c.A,
       totalLate: c.L,

@@ -73,7 +73,7 @@ export function DataTableAttendanceMonthly<TData, TValue>({
         />
 
         {/* Navigate back to summary page (not a dialog trigger) */}
-        <Link href="/dashboard/list/attendance" className="ml-auto">
+        <Link href="/dashboard/attendance" className="ml-auto">
           <Button variant="outline">Attendance Summary</Button>
         </Link>
 

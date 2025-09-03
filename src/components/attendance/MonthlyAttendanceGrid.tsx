@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState, useTransition } from "react";
-import type { ColumnDef } from "@tanstack/react-table"; // your project generates to /generated/prisma
+import type { ColumnDef } from "@tanstack/react-table";
 import { DataTableAttendanceMonthly } from "@/components/data-table/data-table-attendance-monthly";
 import { format, parseISO } from "date-fns";
-import { AttendanceStatus } from "../../../generated/prisma/client";
 
+// keep the enum local for client typing
+type AttendanceStatus = "PRESENT" | "ABSENT" | "LATE" | "EXCUSED";
 type Student = { id: number; firstname: string; lastname: string };
 type RecordRow = { studentId: number; date: string; status: AttendanceStatus; note?: string | null };
 
-function daysInMonth(year: number, month1to12: number) {
-  return new Date(year, month1to12, 0).getUTCDate();
-}
+function daysInMonth(year: number, month1to12: number) { return new Date(year, month1to12, 0).getUTCDate(); }
 function buildDayList(year: number, month: number) {
   return Array.from({ length: daysInMonth(year, month) }, (_, i) =>
     new Date(Date.UTC(year, month - 1, i + 1)).toISOString().slice(0, 10)
@@ -20,12 +19,7 @@ function buildDayList(year: number, month: number) {
 
 function AttendanceCell({
   studentId, date, value, onChange,
-}: {
-  studentId: number;
-  date: string; // yyyy-MM-dd
-  value?: AttendanceStatus | "";
-  onChange: (studentId: number, date: string, value: AttendanceStatus | "") => void;
-}) {
+}: { studentId: number; date: string; value?: AttendanceStatus | ""; onChange: (sid: number, date: string, v: AttendanceStatus | "") => void; }) {
   const bg =
     value === "PRESENT" ? "bg-green-100 text-green-800"
     : value === "ABSENT" ? "bg-red-100 text-red-800"
@@ -55,13 +49,7 @@ function buildColumns(
   getStatus: (sid: number, date: string) => AttendanceStatus | "",
 ): ColumnDef<Student>[] {
   return [
-    {
-      id: "name",
-      header: "Name",
-      accessorFn: (r) => `${r.firstname} ${r.lastname}`,
-      cell: ({ row }) => `${row.original.firstname} ${row.original.lastname}`,
-      size: 220,
-    },
+    { id: "name", header: "Name", accessorFn: (r) => `${r.firstname} ${r.lastname}`, cell: ({ row }) => `${row.original.firstname} ${row.original.lastname}`, size: 220 },
     ...days.map((date) => ({
       id: date,
       header: () => format(parseISO(date), "d"),
@@ -81,12 +69,7 @@ function buildColumns(
   ];
 }
 
-export default function MonthlyAttendanceGrid({
-  year, month,
-}: {
-  year: number;
-  month: number; // 1..12
-}) {
+export default function MonthlyAttendanceGrid({ year, month }: { year: number; month: number; }) {
   const [students, setStudents] = useState<Student[]>([]);
   const [records, setRecords] = useState<RecordRow[]>([]);
   const [editData, setEditData] = useState<Record<string, AttendanceStatus | "">>({});
@@ -108,56 +91,45 @@ export default function MonthlyAttendanceGrid({
   const onChange = (sid: number, date: string, value: AttendanceStatus | "") => {
     const key = `${sid}_${date}`;
     setEditData((prev) => ({ ...prev, [key]: value }));
-
     startTransition(async () => {
       if (value === "") {
-        // Clear cell
         const url = new URL("/api/attendance/day", window.location.origin);
         url.searchParams.set("studentId", String(sid));
         url.searchParams.set("dateISO", date);
         await fetch(url.toString(), { method: "DELETE" });
         setRecords((prev) => prev.filter((r) => !(r.studentId === sid && r.date.startsWith(date))));
       } else {
-        // Upsert cell
         await fetch("/api/attendance/day", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ studentId: sid, dateISO: date, status: value }),
         });
         setRecords((prev) => {
           const i = prev.findIndex((r) => r.studentId === sid && r.date.startsWith(date));
-          if (i >= 0) {
-            const next = [...prev];
-            next[i] = { ...next[i], status: value as AttendanceStatus, date: `${date}T00:00:00.000Z` };
-            return next;
-          }
+          if (i >= 0) { const next = [...prev]; next[i] = { ...next[i], status: value as AttendanceStatus, date: `${date}T00:00:00.000Z` }; return next; }
           return [...prev, { studentId: sid, date: `${date}T00:00:00.000Z`, status: value as AttendanceStatus }];
         });
       }
     });
   };
 
-  // Load month
   useEffect(() => {
     let alive = true;
     (async () => {
       const url = new URL("/api/attendance/month", window.location.origin);
       url.searchParams.set("year", String(year));
       url.searchParams.set("month", String(month));
-      const res = await fetch(url.toString(), { cache: "no-store" });
-      if (!res.ok) return;
-      const payload: { students: Student[]; records: RecordRow[] } = await res.json();
+      const r = await fetch(url.toString(), { cache: "no-store" });
+      if (!r.ok) return;
+      const { students, records } = await r.json();
       if (!alive) return;
-      setStudents(payload.students ?? []);
-      setRecords(payload.records ?? []);
+      setStudents(students ?? []);
+      setRecords(records ?? []);
       setEditData({});
     })();
     return () => { alive = false; };
   }, [year, month]);
 
-  const columns = useMemo<ColumnDef<Student>[]>(() => {
-    return buildColumns(days, editData, onChange, getStatus);
-  }, [days, editData]); // keep onChange/getStatus stable
+  const columns = useMemo(() => buildColumns(days, editData, onChange, getStatus), [days, editData]);
 
   return <DataTableAttendanceMonthly columns={columns} data={students} />;
 }

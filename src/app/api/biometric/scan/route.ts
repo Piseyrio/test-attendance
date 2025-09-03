@@ -1,46 +1,48 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// Change to your rule (local time)
-const LATE_CUTOFF = { hour: 8, minute: 0 };
+const LATE_CUTOFF = { hour: 16, minute: 0 }; // set your cutoff
 
-function startOfDayLocal(d: Date) {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
-}
+function startOfDayLocal(d: Date) { return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0); }
 function isLate(ts: Date) {
-  const cut = new Date(ts.getFullYear(), ts.getMonth(), ts.getDate(), LATE_CUTOFF.hour, LATE_CUTOFF.minute, 0, 0);
-  return ts.getTime() > cut.getTime();
+  const c = new Date(ts.getFullYear(), ts.getMonth(), ts.getDate(), LATE_CUTOFF.hour, LATE_CUTOFF.minute);
+  return ts.getTime() > c.getTime();
 }
 
-/**
- * POST /api/biometric/scan
- * Body: { biometricId: string; timestamp?: string } // ISO; default now
- * Will mark PRESENT or LATE for that calendar day. One row per student/day.
- */
+/** POST { biometricId: string; timestamp?: string } */
 export async function POST(req: Request) {
-  const body = await req.json().catch(() => null);
+  const body = await req.json().catch(() => ({}));
   const biometricId = body?.biometricId as string | undefined;
   const ts = body?.timestamp ? new Date(body.timestamp) : new Date();
+  if (!biometricId) return NextResponse.json({ error: "biometricId is required" }, { status: 400 });
 
-  if (!biometricId) {
-    return NextResponse.json({ error: "biometricId is required" }, { status: 400 });
-  }
-
-  // find student by biometricId (your schema uses biometricId)
   const student = await prisma.student.findUnique({ where: { biometricId } });
-  if (!student) {
-    return NextResponse.json({ error: "Student not found for biometricId" }, { status: 404 });
-  }
+  if (!student) return NextResponse.json({ error: "Student not found for biometricId" }, { status: 404 });
 
   const date = startOfDayLocal(ts);
-  const status: "PRESENT" | "LATE" = isLate(ts) ? "LATE" : "PRESENT";
+  const incoming = isLate(ts) ? "LATE" : "PRESENT" as const;
 
-  // upsert (escalate to LATE if needed)
-  const row = await prisma.attendance.upsert({
+  const existing = await prisma.attendance.findUnique({
     where: { studentId_date: { studentId: student.id, date } },
-    create: { studentId: student.id, date, status },
-    update: { status: status === "LATE" ? "LATE" : undefined, updatedAt: new Date() },
+    select: { status: true },
   });
 
-  return NextResponse.json({ ok: true, studentId: student.id, status: row.status });
+  if (!existing) {
+    await prisma.attendance.create({ data: { studentId: student.id, date, status: incoming } });
+    return NextResponse.json({ ok: true, studentId: student.id, status: incoming });
+  }
+
+  // Don’t overwrite EXCUSED/ABSENT; escalate PRESENT -> LATE
+  if (existing.status === "EXCUSED" || existing.status === "ABSENT") {
+    return NextResponse.json({ ok: true, studentId: student.id, status: existing.status });
+  }
+  if (existing.status !== "LATE" && incoming === "LATE") {
+    await prisma.attendance.update({
+      where: { studentId_date: { studentId: student.id, date } },
+      data: { status: "LATE" },
+    });
+    return NextResponse.json({ ok: true, studentId: student.id, status: "LATE" });
+  }
+
+  return NextResponse.json({ ok: true, studentId: student.id, status: existing.status });
 }

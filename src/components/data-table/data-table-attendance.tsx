@@ -91,10 +91,10 @@ export function DataTableAttendance<TData, TValue>({
         <Input
           placeholder="Filter Name..."
           value={
-            (table.getColumn("firstname")?.getFilterValue() as string) ?? ""
+            (table.getColumn("student")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("firstname")?.setFilterValue(event.target.value)
+            table.getColumn("student")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -102,7 +102,7 @@ export function DataTableAttendance<TData, TValue>({
         {/*Edit Attendance */}
         <Dialog>
           <Link
-            href="/dashboard/list/attendance/monthly"
+            href="/dashboard/attendance/monthly"
             className="flex items-center gap-2"
           >
             <Button variant="outline">Edit Attendance</Button>
