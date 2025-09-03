@@ -1,9 +1,10 @@
 "use client";
 
-import { AttendanceStatus } from "@/generated/prisma";
+
  // ✅ type from Prisma
 import { ColumnDef } from "@tanstack/react-table";
 import { format, parseISO } from "date-fns";
+import { AttendanceStatus } from "../../../generated/prisma/client";
 
 // ---------- Row type ----------
 export type Student = {
