@@ -21,23 +21,21 @@ model Admin {
   createdAt DateTime @default(now())
 }
 
-
 model Student {
-  id          Int           @id @default(autoincrement())
-  biometricId String?       @unique
+  id          Int      @id @default(autoincrement())
+  biometricId String?  @unique
   firstname   String
   lastname    String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // Relations
 
   Attendance Attendance[]
 }
 
-
 model Attendance {
-  id        String           @id @default(uuid())
+  id        Int              @id @default(autoincrement())
   date      DateTime
   status    AttendanceStatus
   note      String?
@@ -52,7 +50,6 @@ model Attendance {
   @@index([date])
   @@index([studentId, date])
 }
-
 
 enum AttendanceStatus {
   PRESENT
@@ -77,4 +74,3 @@ enum StudentStatus {
   GRADUATED
   SUSPENDED
 }
-

@@ -9,6 +9,9 @@ import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MonthlyAttendanceGrid from "@/components/attendance/MonthlyAttendanceGrid";
+import MonthToolbar from "@/components/attendance/MonthToolbar";
+import ExportCsvButton from "@/components/attendance/ExportCsvButton";
+import ImportCsvDialog from "@/components/attendance/ImportCsvDialog";
 
 function monthLabel(year: number, month: number) {
   const d = new Date(Date.UTC(year, month - 1, 1));
@@ -58,11 +61,16 @@ export default function MonthlyPage({ searchParams }: { searchParams?: { y?: str
             <Link href={`/dashboard/attendance/monthly?y=${next.y}&m=${next.m}`}>
               <Button variant="outline">Next</Button>
             </Link>
-            <Link href="/dashboard/attendance" className="ml-auto">
+            {/* <Link href="/dashboard/attendance" className="ml-auto">
               <Button variant="outline">Summary</Button>
-            </Link>
+            </Link> */}
           </div>
-
+             <div className="flex items-center justify-between">
+              <ExportCsvButton year={year} month={month}  />
+              <ImportCsvDialog year={year} month={month} />
+            <MonthToolbar initialYear={year} initialMonth={month}/>
+            {/* you can add a class selector on the right if you want */}
+          </div>
           <MonthlyAttendanceGrid year={year} month={month} />
         </div>
       </SidebarInset>

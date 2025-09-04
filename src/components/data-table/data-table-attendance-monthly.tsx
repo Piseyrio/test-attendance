@@ -72,24 +72,23 @@ export function DataTableAttendanceMonthly<TData, TValue>({
           className="max-w-sm"
         />
 
-        {/* Navigate back to summary page (not a dialog trigger) */}
-        <Link href="/dashboard/attendance" className="ml-auto">
-          <Button variant="outline">Attendance Summary</Button>
-        </Link>
-
+        
         {/* Optional dialog (kept for future use) */}
         <Dialog>
           <DialogContent className="md:max-w-[925px]">
             <DialogHeader>
               <DialogTitle>Students Form</DialogTitle>
-              <DialogDescription>Add student information here…</DialogDescription>
+              <DialogDescription>Edit attendance monthly here…</DialogDescription>
             </DialogHeader>
             <div className="flex flex-col">
-              <span>Students Information</span>
-              {/* form content goes here */}
+              
             </div>
           </DialogContent>
         </Dialog>
+{/* Navigate back to summary page (not a dialog trigger) */}
+        <Link href="/dashboard/attendance" className="mr-auto">
+          <Button variant="outline">Attendance Summary</Button>
+        </Link>
 
         {/* Columns visibility */}
         <DropdownMenu>

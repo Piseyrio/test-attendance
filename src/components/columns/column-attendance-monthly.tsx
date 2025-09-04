@@ -1,10 +1,8 @@
 "use client";
 
-
- // ✅ type from Prisma
 import { ColumnDef } from "@tanstack/react-table";
 import { format, parseISO } from "date-fns";
-import { AttendanceStatus } from "../../../generated/prisma/client";
+import type { AttendanceStatus } from "../../../generated/prisma/client";
 
 // ---------- Row type ----------
 export type Student = {
@@ -12,6 +10,13 @@ export type Student = {
   firstname: string;
   lastname: string;
 };
+
+// ---------- Helpers ----------
+function weekdayLetter(dateStr: string) {
+  const d = parseISO(dateStr);
+  const gd = d.getDay(); // 0=Sun..6=Sat
+  return ["S", "M", "T", "W", "T", "F", "S"][gd];
+}
 
 // ---------- Cell ----------
 type AttendanceCellProps = {
@@ -38,7 +43,6 @@ export function AttendanceCell({ studentId, date, value, onChange }: AttendanceC
       className={`w-14 rounded border px-1 py-1 text-sm ${bg}`}
       value={value ?? ""}
       onChange={(e) => {
-        // Handle blank option safely
         const raw = e.target.value;
         const next: AttendanceStatus | "" = raw === "" ? "" : (raw as AttendanceStatus);
         onChange(studentId, date, next);
@@ -53,9 +57,9 @@ export function AttendanceCell({ studentId, date, value, onChange }: AttendanceC
   );
 }
 
-// ---------- Columns builder (full month) ----------
+// ---------- Columns builder (flat month, no week groups) ----------
 export function buildAttendanceColumns(
-  days: string[], // ["2025-08-01", ...] (yyyy-MM-dd)
+  days: string[], // ["2025-09-01", ...] (yyyy-MM-dd)
   editData: Record<string, AttendanceStatus | "">, // key = `${studentId}_${date}`
   onChange: AttendanceCellProps["onChange"],
   getAttendanceStatus: (studentId: number, date: string) => AttendanceStatus | ""
@@ -64,27 +68,28 @@ export function buildAttendanceColumns(
     {
       id: "name",
       header: "Name",
-      accessorFn: (row) => `${row.firstname} ${row.lastname}`, // helps filtering/sorting
+      accessorFn: (row) => `${row.firstname} ${row.lastname}`,
       cell: ({ row }) => `${row.original.firstname} ${row.original.lastname}`,
       size: 220,
+      meta: { className: "sticky left-0 bg-background z-10" as const },
     },
     ...days.map((date) => ({
       id: date,
-      header: () => format(parseISO(date), "d"), // ✅ timezone-safe label
       enableSorting: false,
       meta: { className: "text-center" as const },
+      header: () => (
+        <div className="flex flex-col items-center leading-tight">
+          <div className="text-[10px] text-muted-foreground">{weekdayLetter(date)}</div>
+          <div className="text-sm font-medium">{format(parseISO(date), "d")}</div>
+        </div>
+      ),
       cell: ({ row }) => {
-        const studentId = row.original.id;
-        const key = `${studentId}_${date}`;
-        const value = editData[key] ?? getAttendanceStatus(studentId, date);
+        const sid = row.original.id;
+        const key = `${sid}_${date}`;
+        const value = editData[key] ?? getAttendanceStatus(sid, date);
         return (
           <div className="flex items-center justify-center">
-            <AttendanceCell
-              studentId={studentId}
-              date={date}
-              value={value}
-              onChange={onChange}
-            />
+            <AttendanceCell studentId={sid} date={date} value={value} onChange={onChange} />
           </div>
         );
       },

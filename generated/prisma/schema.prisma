@@ -35,7 +35,7 @@ model Student {
 }
 
 model Attendance {
-  id        String           @id @default(uuid())
+  id        Int              @id @default(autoincrement())
   date      DateTime
   status    AttendanceStatus
   note      String?

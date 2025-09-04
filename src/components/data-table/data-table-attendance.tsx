@@ -110,16 +110,13 @@ export function DataTableAttendance<TData, TValue>({
 
           <DialogContent className="md:max-w-[925px]">
             <DialogHeader>
-              <DialogTitle>Students Form</DialogTitle>
+              {/* <DialogTitle>Students Form</DialogTitle>
               <DialogDescription>
                 Add student information here.....
-              </DialogDescription>
+              </DialogDescription> */}
             </DialogHeader>
 
-            <div className="flex flex-col ">
-              <span>Students Information</span>
-              {/*  */}
-            </div>
+        
           </DialogContent>
         </Dialog>
         {/*Select Columns*/}

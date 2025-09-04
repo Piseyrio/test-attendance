@@ -3264,15 +3264,17 @@ export namespace Prisma {
   }
 
   export type AttendanceAvgAggregateOutputType = {
+    id: number | null
     studentId: number | null
   }
 
   export type AttendanceSumAggregateOutputType = {
+    id: number | null
     studentId: number | null
   }
 
   export type AttendanceMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     date: Date | null
     status: $Enums.AttendanceStatus | null
     note: string | null
@@ -3282,7 +3284,7 @@ export namespace Prisma {
   }
 
   export type AttendanceMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     date: Date | null
     status: $Enums.AttendanceStatus | null
     note: string | null
@@ -3304,10 +3306,12 @@ export namespace Prisma {
 
 
   export type AttendanceAvgAggregateInputType = {
+    id?: true
     studentId?: true
   }
 
   export type AttendanceSumAggregateInputType = {
+    id?: true
     studentId?: true
   }
 
@@ -3429,7 +3433,7 @@ export namespace Prisma {
   }
 
   export type AttendanceGroupByOutputType = {
-    id: string
+    id: number
     date: Date
     status: $Enums.AttendanceStatus
     note: string | null
@@ -3517,7 +3521,7 @@ export namespace Prisma {
       student: Prisma.$StudentPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       date: Date
       status: $Enums.AttendanceStatus
       note: string | null
@@ -3948,7 +3952,7 @@ export namespace Prisma {
    * Fields of the Attendance model
    */
   interface AttendanceFieldRefs {
-    readonly id: FieldRef<"Attendance", 'String'>
+    readonly id: FieldRef<"Attendance", 'Int'>
     readonly date: FieldRef<"Attendance", 'DateTime'>
     readonly status: FieldRef<"Attendance", 'AttendanceStatus'>
     readonly note: FieldRef<"Attendance", 'String'>
@@ -4635,7 +4639,7 @@ export namespace Prisma {
     AND?: AttendanceWhereInput | AttendanceWhereInput[]
     OR?: AttendanceWhereInput[]
     NOT?: AttendanceWhereInput | AttendanceWhereInput[]
-    id?: StringFilter<"Attendance"> | string
+    id?: IntFilter<"Attendance"> | number
     date?: DateTimeFilter<"Attendance"> | Date | string
     status?: EnumAttendanceStatusFilter<"Attendance"> | $Enums.AttendanceStatus
     note?: StringNullableFilter<"Attendance"> | string | null
@@ -4657,7 +4661,7 @@ export namespace Prisma {
   }
 
   export type AttendanceWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     studentId_date?: AttendanceStudentIdDateCompoundUniqueInput
     AND?: AttendanceWhereInput | AttendanceWhereInput[]
     OR?: AttendanceWhereInput[]
@@ -4690,7 +4694,7 @@ export namespace Prisma {
     AND?: AttendanceScalarWhereWithAggregatesInput | AttendanceScalarWhereWithAggregatesInput[]
     OR?: AttendanceScalarWhereWithAggregatesInput[]
     NOT?: AttendanceScalarWhereWithAggregatesInput | AttendanceScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Attendance"> | string
+    id?: IntWithAggregatesFilter<"Attendance"> | number
     date?: DateTimeWithAggregatesFilter<"Attendance"> | Date | string
     status?: EnumAttendanceStatusWithAggregatesFilter<"Attendance"> | $Enums.AttendanceStatus
     note?: StringNullableWithAggregatesFilter<"Attendance"> | string | null
@@ -4810,7 +4814,6 @@ export namespace Prisma {
   }
 
   export type AttendanceCreateInput = {
-    id?: string
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -4820,7 +4823,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedCreateInput = {
-    id?: string
+    id?: number
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -4830,7 +4833,6 @@ export namespace Prisma {
   }
 
   export type AttendanceUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4840,7 +4842,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4850,7 +4852,7 @@ export namespace Prisma {
   }
 
   export type AttendanceCreateManyInput = {
-    id?: string
+    id?: number
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -4860,7 +4862,6 @@ export namespace Prisma {
   }
 
   export type AttendanceUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4869,7 +4870,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5103,6 +5104,7 @@ export namespace Prisma {
   }
 
   export type AttendanceAvgOrderByAggregateInput = {
+    id?: SortOrder
     studentId?: SortOrder
   }
 
@@ -5127,6 +5129,7 @@ export namespace Prisma {
   }
 
   export type AttendanceSumOrderByAggregateInput = {
+    id?: SortOrder
     studentId?: SortOrder
   }
 
@@ -5374,7 +5377,6 @@ export namespace Prisma {
   }
 
   export type AttendanceCreateWithoutStudentInput = {
-    id?: string
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -5383,7 +5385,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedCreateWithoutStudentInput = {
-    id?: string
+    id?: number
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -5421,7 +5423,7 @@ export namespace Prisma {
     AND?: AttendanceScalarWhereInput | AttendanceScalarWhereInput[]
     OR?: AttendanceScalarWhereInput[]
     NOT?: AttendanceScalarWhereInput | AttendanceScalarWhereInput[]
-    id?: StringFilter<"Attendance"> | string
+    id?: IntFilter<"Attendance"> | number
     date?: DateTimeFilter<"Attendance"> | Date | string
     status?: EnumAttendanceStatusFilter<"Attendance"> | $Enums.AttendanceStatus
     note?: StringNullableFilter<"Attendance"> | string | null
@@ -5481,7 +5483,7 @@ export namespace Prisma {
   }
 
   export type AttendanceCreateManyStudentInput = {
-    id?: string
+    id?: number
     date: Date | string
     status: $Enums.AttendanceStatus
     note?: string | null
@@ -5490,7 +5492,6 @@ export namespace Prisma {
   }
 
   export type AttendanceUpdateWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5499,7 +5500,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedUpdateWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5508,7 +5509,7 @@ export namespace Prisma {
   }
 
   export type AttendanceUncheckedUpdateManyWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
     note?: NullableStringFieldUpdateOperationsInput | string | null

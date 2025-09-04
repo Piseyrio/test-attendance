@@ -4,13 +4,13 @@ import { prisma } from "@/lib/prisma";
 
 // 0=Sun, 1=Mon, ... 6=Sat
 const DAILY_SCHEDULE: Record<number, { startH: number; startM: number; endH: number; endM: number }[]> = {
-  1: [{ startH: 18, startM: 0, endH: 19, endM: 0 }], // Mon 18:00–19:00
-  2: [{ startH: 18, startM: 0, endH: 19, endM: 0 }], // Tue
-  3: [{ startH: 13, startM: 0, endH: 14, endM: 0 }], // Wed
-  4: [{ startH: 16, startM: 0, endH: 17, endM: 0 }], // Thu 16:00–17:00
-  5: [{ startH: 18, startM: 0, endH: 19, endM: 0 }], // Fri
+  1: [{ startH: 16, startM: 0, endH: 20, endM: 0 }], // Mon 18:00–19:00
+  2: [{ startH: 16, startM: 0, endH: 20, endM: 0 }], // Tue
+  3: [{ startH: 16, startM: 0, endH: 20, endM: 0 }], // Wed
+  4: [{ startH: 14, startM: 0, endH: 17, endM: 0 }], // Thu 16:00–17:00
+  5: [{ startH: 16, startM: 0, endH: 20, endM: 0 }], // Fri
   6: [],                                             // Sat (rest) -> no class
-  0: [{ startH: 9,  startM: 0, endH: 11, endM: 0 }], // Sun 9:00–11:00
+  0: [{ startH: 7,  startM: 0, endH: 11, endM: 0 }], // Sun 9:00–11:00
 };
 
 // optional late grace (minutes) after start time
