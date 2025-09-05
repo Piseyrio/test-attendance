@@ -1,5 +1,5 @@
 // CommonJS to keep it simple when run by node
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../../generated/prisma/client");
 const ZKLib = require("node-zklib");
 
 const DEVICE_IP = process.env.ZK_IP || "192.168.102.102";
