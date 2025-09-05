@@ -1,4 +1,5 @@
 // CommonJS to keep it simple when run by node
+require("dotenv").config(); // ← load .env
 const { PrismaClient } = require("../../generated/prisma/client");
 const ZKLib = require("node-zklib");
 

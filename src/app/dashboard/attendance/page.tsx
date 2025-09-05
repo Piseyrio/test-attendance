@@ -18,6 +18,7 @@ export default async function Attendance() {
   const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
   const data = await getStudentAttendanceRows({ start, end });
 
+  
   return (
     <SidebarProvider>
       <AppSidebar />

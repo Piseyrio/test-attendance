@@ -1,12 +1,21 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/dark-mode";
 import { NavUser } from "@/components/nav-user";
 import {
-  Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import MonthlyAttendanceGrid from "@/components/attendance/MonthlyAttendanceGrid";
 import MonthToolbar from "@/components/attendance/MonthToolbar";
@@ -15,12 +24,28 @@ import ImportCsvDialog from "@/components/attendance/ImportCsvDialog";
 
 function monthLabel(year: number, month: number) {
   const d = new Date(Date.UTC(year, month - 1, 1));
-  return d.toLocaleString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+  return d.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
-function prevYM(y: number, m: number) { const d = new Date(Date.UTC(y, m - 1, 1)); d.setUTCMonth(d.getUTCMonth() - 1); return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1 }; }
-function nextYM(y: number, m: number) { const d = new Date(Date.UTC(y, m - 1, 1)); d.setUTCMonth(d.getUTCMonth() + 1); return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1 }; }
+function prevYM(y: number, m: number) {
+  const d = new Date(Date.UTC(y, m - 1, 1));
+  d.setUTCMonth(d.getUTCMonth() - 1);
+  return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1 };
+}
+function nextYM(y: number, m: number) {
+  const d = new Date(Date.UTC(y, m - 1, 1));
+  d.setUTCMonth(d.getUTCMonth() + 1);
+  return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1 };
+}
 
-export default function MonthlyPage({ searchParams }: { searchParams?: { y?: string; m?: string } }) {
+export default function MonthlyPage({
+  searchParams,
+}: {
+  searchParams?: { y?: string; m?: string };
+}) {
   const now = new Date();
   const year = Number(searchParams?.y ?? now.getUTCFullYear());
   const month = Number(searchParams?.m ?? now.getUTCMonth() + 1);
@@ -38,10 +63,14 @@ export default function MonthlyPage({ searchParams }: { searchParams?: { y?: str
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/dashboard/attendance">Attendance</BreadcrumbLink>
+                  <BreadcrumbLink href="/dashboard/attendance">
+                    Attendance
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem><BreadcrumbPage>Monthly Editor</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Monthly Editor</BreadcrumbPage>
+                </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
@@ -53,22 +82,10 @@ export default function MonthlyPage({ searchParams }: { searchParams?: { y?: str
         </header>
 
         <div className="p-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <Link href={`/dashboard/attendance/monthly?y=${prev.y}&m=${prev.m}`}>
-              <Button variant="outline">Prev</Button>
-            </Link>
-            <div className="text-xl font-semibold">{monthLabel(year, month)}</div>
-            <Link href={`/dashboard/attendance/monthly?y=${next.y}&m=${next.m}`}>
-              <Button variant="outline">Next</Button>
-            </Link>
-            {/* <Link href="/dashboard/attendance" className="ml-auto">
-              <Button variant="outline">Summary</Button>
-            </Link> */}
-          </div>
-             <div className="flex items-center justify-between">
-              <ExportCsvButton year={year} month={month}  />
-              <ImportCsvDialog year={year} month={month} />
-            <MonthToolbar initialYear={year} initialMonth={month}/>
+          <div className="flex items-center justify-auto gap-2">
+            <ExportCsvButton year={year} month={month} />
+            <ImportCsvDialog year={year} month={month} />
+            <MonthToolbar initialYear={year} initialMonth={month} />
             {/* you can add a class selector on the right if you want */}
           </div>
           <MonthlyAttendanceGrid year={year} month={month} />

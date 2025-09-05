@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
 export type StudentAttendanceRow = {
-  student: { id: number; firstname: string; lastname: string; img?: string | null };
+  student: {
+    biometricId: unknown; id: number; firstname: string; lastname: string; img?: string | null 
+};
   totalAttendance: number; // PRESENT
   totalAbsent: number;     // ABSENT
   totalLate: number;       // LATE
@@ -40,7 +42,10 @@ export async function getStudentAttendanceRows(params?: { start?: Date; end?: Da
   return students.map((s) => {
     const c = counts.get(s.id)!;
     return {
-      student: { ...s, img: null },
+      student: {
+        ...s, img: null,
+        biometricId: undefined
+      },
       totalAttendance: c.P,
       totalAbsent: c.A,
       totalLate: c.L,

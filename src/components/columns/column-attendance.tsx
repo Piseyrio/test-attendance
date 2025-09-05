@@ -44,7 +44,13 @@ export const columns: ColumnDef<StudentAttendanceRow>[] = [
       );
     },
   },
-  {accessorKey: "biometricId", header: "Biometric ID", meta: { className: "hidden md:table-cell" } },
+  {
+  accessorKey: "biometricId",
+        header: "Biometric ID",
+        accessorFn: (row) => row.student.biometricId,
+        cell: ({ row }) => row.original.student.biometricId ,
+        meta: { className: "hidden md:table-cell" },
+        },
   { accessorKey: "totalAttendance", header: "Present",   meta: { className: "hidden md:table-cell" } },
   { accessorKey: "totalAbsent",     header: "Absent",    meta: { className: "hidden lg:table-cell" } },
   { accessorKey: "totalLate",       header: "Late",      meta: { className: "hidden lg:table-cell" } },
