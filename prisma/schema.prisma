@@ -51,6 +51,20 @@ model Attendance {
   @@index([studentId, date])
 }
 
+// prisma/schema.prisma
+model ScheduleRule {
+  id           Int      @id @default(autoincrement())
+  dayOfWeek    Int // 0=Sun..6=Sat
+  startMinutes Int // minutes from 00:00 local (e.g. 18:00 -> 1080)
+  endMinutes   Int // e.g. 19:00 -> 1140
+  active       Boolean  @default(true)
+  label        String? // "Evening class" etc.
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([dayOfWeek, active])
+}
+
 enum AttendanceStatus {
   PRESENT
   ABSENT

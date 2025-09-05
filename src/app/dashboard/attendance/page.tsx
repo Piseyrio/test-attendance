@@ -45,10 +45,6 @@ export default async function Attendance() {
         </header>
 
         <div className="p-4">
-          <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-xl font-semibold">Current Month</h1>
-            <Link href="/dashboard/attendance/monthly"><Button variant="outline">Edit Monthly</Button></Link>
-          </div>
           <DataTableAttendance columns={columns} data={data} />
         </div>
       </SidebarInset>

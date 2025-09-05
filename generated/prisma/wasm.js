@@ -146,6 +146,17 @@ exports.Prisma.AttendanceScalarFieldEnum = {
   studentId: 'studentId'
 };
 
+exports.Prisma.ScheduleRuleScalarFieldEnum = {
+  id: 'id',
+  dayOfWeek: 'dayOfWeek',
+  startMinutes: 'startMinutes',
+  endMinutes: 'endMinutes',
+  active: 'active',
+  label: 'label',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -170,7 +181,8 @@ exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
 exports.Prisma.ModelName = {
   Admin: 'Admin',
   Student: 'Student',
-  Attendance: 'Attendance'
+  Attendance: 'Attendance',
+  ScheduleRule: 'ScheduleRule'
 };
 
 /**

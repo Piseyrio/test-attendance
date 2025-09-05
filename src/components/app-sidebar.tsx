@@ -35,6 +35,11 @@ const data = {
       url: "/dashboard/attendance",
       icon: LayoutDashboard,
     },
+    {
+      name: "Schedule",
+      url: "/dashboard/attendance/schedule",
+      icon: Map,
+    },
   ],
 }
 

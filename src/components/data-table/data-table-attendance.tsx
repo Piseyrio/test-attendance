@@ -49,8 +49,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "../ui/dialog";
 import Link from "next/link";
+import SchedulePage from "@/app/dashboard/attendance/schedule/page";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -90,9 +92,7 @@ export function DataTableAttendance<TData, TValue>({
       <div className="flex items-center py-4 px-2 gap-2">
         <Input
           placeholder="Filter Name..."
-          value={
-            (table.getColumn("student")?.getFilterValue() as string) ?? ""
-          }
+          value={(table.getColumn("student")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("student")?.setFilterValue(event.target.value)
           }
@@ -108,15 +108,15 @@ export function DataTableAttendance<TData, TValue>({
             <Button variant="outline">Edit Attendance</Button>
           </Link>
 
+          <DialogTrigger asChild>
+            <Button variant="outline">Add Schedule</Button>
+          </DialogTrigger>
           <DialogContent className="md:max-w-[925px]">
             <DialogHeader>
-              {/* <DialogTitle>Students Form</DialogTitle>
-              <DialogDescription>
-                Add student information here.....
-              </DialogDescription> */}
+              <DialogTitle>Add New Schedule</DialogTitle>
             </DialogHeader>
 
-        
+            <SchedulePage />
           </DialogContent>
         </Dialog>
         {/*Select Columns*/}

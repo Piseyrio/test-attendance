@@ -28,6 +28,11 @@ export type Student = $Result.DefaultSelection<Prisma.$StudentPayload>
  * 
  */
 export type Attendance = $Result.DefaultSelection<Prisma.$AttendancePayload>
+/**
+ * Model ScheduleRule
+ * 
+ */
+export type ScheduleRule = $Result.DefaultSelection<Prisma.$ScheduleRulePayload>
 
 /**
  * Enums
@@ -226,6 +231,16 @@ export class PrismaClient<
     * ```
     */
   get attendance(): Prisma.AttendanceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scheduleRule`: Exposes CRUD operations for the **ScheduleRule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScheduleRules
+    * const scheduleRules = await prisma.scheduleRule.findMany()
+    * ```
+    */
+  get scheduleRule(): Prisma.ScheduleRuleDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -668,7 +683,8 @@ export namespace Prisma {
   export const ModelName: {
     Admin: 'Admin',
     Student: 'Student',
-    Attendance: 'Attendance'
+    Attendance: 'Attendance',
+    ScheduleRule: 'ScheduleRule'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -687,7 +703,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "student" | "attendance"
+      modelProps: "admin" | "student" | "attendance" | "scheduleRule"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -913,6 +929,80 @@ export namespace Prisma {
           }
         }
       }
+      ScheduleRule: {
+        payload: Prisma.$ScheduleRulePayload<ExtArgs>
+        fields: Prisma.ScheduleRuleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScheduleRuleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScheduleRuleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          findFirst: {
+            args: Prisma.ScheduleRuleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScheduleRuleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          findMany: {
+            args: Prisma.ScheduleRuleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>[]
+          }
+          create: {
+            args: Prisma.ScheduleRuleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          createMany: {
+            args: Prisma.ScheduleRuleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScheduleRuleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>[]
+          }
+          delete: {
+            args: Prisma.ScheduleRuleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          update: {
+            args: Prisma.ScheduleRuleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          deleteMany: {
+            args: Prisma.ScheduleRuleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScheduleRuleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScheduleRuleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>[]
+          }
+          upsert: {
+            args: Prisma.ScheduleRuleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduleRulePayload>
+          }
+          aggregate: {
+            args: Prisma.ScheduleRuleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScheduleRule>
+          }
+          groupBy: {
+            args: Prisma.ScheduleRuleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScheduleRuleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScheduleRuleCountArgs<ExtArgs>
+            result: $Utils.Optional<ScheduleRuleCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1008,6 +1098,7 @@ export namespace Prisma {
     admin?: AdminOmit
     student?: StudentOmit
     attendance?: AttendanceOmit
+    scheduleRule?: ScheduleRuleOmit
   }
 
   /* Types for Logging */
@@ -4374,6 +4465,1086 @@ export namespace Prisma {
 
 
   /**
+   * Model ScheduleRule
+   */
+
+  export type AggregateScheduleRule = {
+    _count: ScheduleRuleCountAggregateOutputType | null
+    _avg: ScheduleRuleAvgAggregateOutputType | null
+    _sum: ScheduleRuleSumAggregateOutputType | null
+    _min: ScheduleRuleMinAggregateOutputType | null
+    _max: ScheduleRuleMaxAggregateOutputType | null
+  }
+
+  export type ScheduleRuleAvgAggregateOutputType = {
+    id: number | null
+    dayOfWeek: number | null
+    startMinutes: number | null
+    endMinutes: number | null
+  }
+
+  export type ScheduleRuleSumAggregateOutputType = {
+    id: number | null
+    dayOfWeek: number | null
+    startMinutes: number | null
+    endMinutes: number | null
+  }
+
+  export type ScheduleRuleMinAggregateOutputType = {
+    id: number | null
+    dayOfWeek: number | null
+    startMinutes: number | null
+    endMinutes: number | null
+    active: boolean | null
+    label: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScheduleRuleMaxAggregateOutputType = {
+    id: number | null
+    dayOfWeek: number | null
+    startMinutes: number | null
+    endMinutes: number | null
+    active: boolean | null
+    label: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScheduleRuleCountAggregateOutputType = {
+    id: number
+    dayOfWeek: number
+    startMinutes: number
+    endMinutes: number
+    active: number
+    label: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScheduleRuleAvgAggregateInputType = {
+    id?: true
+    dayOfWeek?: true
+    startMinutes?: true
+    endMinutes?: true
+  }
+
+  export type ScheduleRuleSumAggregateInputType = {
+    id?: true
+    dayOfWeek?: true
+    startMinutes?: true
+    endMinutes?: true
+  }
+
+  export type ScheduleRuleMinAggregateInputType = {
+    id?: true
+    dayOfWeek?: true
+    startMinutes?: true
+    endMinutes?: true
+    active?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScheduleRuleMaxAggregateInputType = {
+    id?: true
+    dayOfWeek?: true
+    startMinutes?: true
+    endMinutes?: true
+    active?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScheduleRuleCountAggregateInputType = {
+    id?: true
+    dayOfWeek?: true
+    startMinutes?: true
+    endMinutes?: true
+    active?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScheduleRuleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScheduleRule to aggregate.
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduleRules to fetch.
+     */
+    orderBy?: ScheduleRuleOrderByWithRelationInput | ScheduleRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScheduleRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduleRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduleRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScheduleRules
+    **/
+    _count?: true | ScheduleRuleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScheduleRuleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScheduleRuleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScheduleRuleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScheduleRuleMaxAggregateInputType
+  }
+
+  export type GetScheduleRuleAggregateType<T extends ScheduleRuleAggregateArgs> = {
+        [P in keyof T & keyof AggregateScheduleRule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScheduleRule[P]>
+      : GetScalarType<T[P], AggregateScheduleRule[P]>
+  }
+
+
+
+
+  export type ScheduleRuleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduleRuleWhereInput
+    orderBy?: ScheduleRuleOrderByWithAggregationInput | ScheduleRuleOrderByWithAggregationInput[]
+    by: ScheduleRuleScalarFieldEnum[] | ScheduleRuleScalarFieldEnum
+    having?: ScheduleRuleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScheduleRuleCountAggregateInputType | true
+    _avg?: ScheduleRuleAvgAggregateInputType
+    _sum?: ScheduleRuleSumAggregateInputType
+    _min?: ScheduleRuleMinAggregateInputType
+    _max?: ScheduleRuleMaxAggregateInputType
+  }
+
+  export type ScheduleRuleGroupByOutputType = {
+    id: number
+    dayOfWeek: number
+    startMinutes: number
+    endMinutes: number
+    active: boolean
+    label: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ScheduleRuleCountAggregateOutputType | null
+    _avg: ScheduleRuleAvgAggregateOutputType | null
+    _sum: ScheduleRuleSumAggregateOutputType | null
+    _min: ScheduleRuleMinAggregateOutputType | null
+    _max: ScheduleRuleMaxAggregateOutputType | null
+  }
+
+  type GetScheduleRuleGroupByPayload<T extends ScheduleRuleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScheduleRuleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScheduleRuleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScheduleRuleGroupByOutputType[P]>
+            : GetScalarType<T[P], ScheduleRuleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScheduleRuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dayOfWeek?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    active?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scheduleRule"]>
+
+  export type ScheduleRuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dayOfWeek?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    active?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scheduleRule"]>
+
+  export type ScheduleRuleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dayOfWeek?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    active?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scheduleRule"]>
+
+  export type ScheduleRuleSelectScalar = {
+    id?: boolean
+    dayOfWeek?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    active?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ScheduleRuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dayOfWeek" | "startMinutes" | "endMinutes" | "active" | "label" | "createdAt" | "updatedAt", ExtArgs["result"]["scheduleRule"]>
+
+  export type $ScheduleRulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScheduleRule"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      dayOfWeek: number
+      startMinutes: number
+      endMinutes: number
+      active: boolean
+      label: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scheduleRule"]>
+    composites: {}
+  }
+
+  type ScheduleRuleGetPayload<S extends boolean | null | undefined | ScheduleRuleDefaultArgs> = $Result.GetResult<Prisma.$ScheduleRulePayload, S>
+
+  type ScheduleRuleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScheduleRuleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScheduleRuleCountAggregateInputType | true
+    }
+
+  export interface ScheduleRuleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScheduleRule'], meta: { name: 'ScheduleRule' } }
+    /**
+     * Find zero or one ScheduleRule that matches the filter.
+     * @param {ScheduleRuleFindUniqueArgs} args - Arguments to find a ScheduleRule
+     * @example
+     * // Get one ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScheduleRuleFindUniqueArgs>(args: SelectSubset<T, ScheduleRuleFindUniqueArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScheduleRule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScheduleRuleFindUniqueOrThrowArgs} args - Arguments to find a ScheduleRule
+     * @example
+     * // Get one ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScheduleRuleFindUniqueOrThrowArgs>(args: SelectSubset<T, ScheduleRuleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScheduleRule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleFindFirstArgs} args - Arguments to find a ScheduleRule
+     * @example
+     * // Get one ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScheduleRuleFindFirstArgs>(args?: SelectSubset<T, ScheduleRuleFindFirstArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScheduleRule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleFindFirstOrThrowArgs} args - Arguments to find a ScheduleRule
+     * @example
+     * // Get one ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScheduleRuleFindFirstOrThrowArgs>(args?: SelectSubset<T, ScheduleRuleFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScheduleRules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScheduleRules
+     * const scheduleRules = await prisma.scheduleRule.findMany()
+     * 
+     * // Get first 10 ScheduleRules
+     * const scheduleRules = await prisma.scheduleRule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scheduleRuleWithIdOnly = await prisma.scheduleRule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScheduleRuleFindManyArgs>(args?: SelectSubset<T, ScheduleRuleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScheduleRule.
+     * @param {ScheduleRuleCreateArgs} args - Arguments to create a ScheduleRule.
+     * @example
+     * // Create one ScheduleRule
+     * const ScheduleRule = await prisma.scheduleRule.create({
+     *   data: {
+     *     // ... data to create a ScheduleRule
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScheduleRuleCreateArgs>(args: SelectSubset<T, ScheduleRuleCreateArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScheduleRules.
+     * @param {ScheduleRuleCreateManyArgs} args - Arguments to create many ScheduleRules.
+     * @example
+     * // Create many ScheduleRules
+     * const scheduleRule = await prisma.scheduleRule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScheduleRuleCreateManyArgs>(args?: SelectSubset<T, ScheduleRuleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScheduleRules and returns the data saved in the database.
+     * @param {ScheduleRuleCreateManyAndReturnArgs} args - Arguments to create many ScheduleRules.
+     * @example
+     * // Create many ScheduleRules
+     * const scheduleRule = await prisma.scheduleRule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScheduleRules and only return the `id`
+     * const scheduleRuleWithIdOnly = await prisma.scheduleRule.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScheduleRuleCreateManyAndReturnArgs>(args?: SelectSubset<T, ScheduleRuleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScheduleRule.
+     * @param {ScheduleRuleDeleteArgs} args - Arguments to delete one ScheduleRule.
+     * @example
+     * // Delete one ScheduleRule
+     * const ScheduleRule = await prisma.scheduleRule.delete({
+     *   where: {
+     *     // ... filter to delete one ScheduleRule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScheduleRuleDeleteArgs>(args: SelectSubset<T, ScheduleRuleDeleteArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScheduleRule.
+     * @param {ScheduleRuleUpdateArgs} args - Arguments to update one ScheduleRule.
+     * @example
+     * // Update one ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScheduleRuleUpdateArgs>(args: SelectSubset<T, ScheduleRuleUpdateArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScheduleRules.
+     * @param {ScheduleRuleDeleteManyArgs} args - Arguments to filter ScheduleRules to delete.
+     * @example
+     * // Delete a few ScheduleRules
+     * const { count } = await prisma.scheduleRule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScheduleRuleDeleteManyArgs>(args?: SelectSubset<T, ScheduleRuleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScheduleRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScheduleRules
+     * const scheduleRule = await prisma.scheduleRule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScheduleRuleUpdateManyArgs>(args: SelectSubset<T, ScheduleRuleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScheduleRules and returns the data updated in the database.
+     * @param {ScheduleRuleUpdateManyAndReturnArgs} args - Arguments to update many ScheduleRules.
+     * @example
+     * // Update many ScheduleRules
+     * const scheduleRule = await prisma.scheduleRule.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScheduleRules and only return the `id`
+     * const scheduleRuleWithIdOnly = await prisma.scheduleRule.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScheduleRuleUpdateManyAndReturnArgs>(args: SelectSubset<T, ScheduleRuleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScheduleRule.
+     * @param {ScheduleRuleUpsertArgs} args - Arguments to update or create a ScheduleRule.
+     * @example
+     * // Update or create a ScheduleRule
+     * const scheduleRule = await prisma.scheduleRule.upsert({
+     *   create: {
+     *     // ... data to create a ScheduleRule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScheduleRule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScheduleRuleUpsertArgs>(args: SelectSubset<T, ScheduleRuleUpsertArgs<ExtArgs>>): Prisma__ScheduleRuleClient<$Result.GetResult<Prisma.$ScheduleRulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScheduleRules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleCountArgs} args - Arguments to filter ScheduleRules to count.
+     * @example
+     * // Count the number of ScheduleRules
+     * const count = await prisma.scheduleRule.count({
+     *   where: {
+     *     // ... the filter for the ScheduleRules we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScheduleRuleCountArgs>(
+      args?: Subset<T, ScheduleRuleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScheduleRuleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScheduleRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScheduleRuleAggregateArgs>(args: Subset<T, ScheduleRuleAggregateArgs>): Prisma.PrismaPromise<GetScheduleRuleAggregateType<T>>
+
+    /**
+     * Group by ScheduleRule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleRuleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScheduleRuleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScheduleRuleGroupByArgs['orderBy'] }
+        : { orderBy?: ScheduleRuleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScheduleRuleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScheduleRuleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScheduleRule model
+   */
+  readonly fields: ScheduleRuleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScheduleRule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScheduleRuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScheduleRule model
+   */
+  interface ScheduleRuleFieldRefs {
+    readonly id: FieldRef<"ScheduleRule", 'Int'>
+    readonly dayOfWeek: FieldRef<"ScheduleRule", 'Int'>
+    readonly startMinutes: FieldRef<"ScheduleRule", 'Int'>
+    readonly endMinutes: FieldRef<"ScheduleRule", 'Int'>
+    readonly active: FieldRef<"ScheduleRule", 'Boolean'>
+    readonly label: FieldRef<"ScheduleRule", 'String'>
+    readonly createdAt: FieldRef<"ScheduleRule", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScheduleRule", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScheduleRule findUnique
+   */
+  export type ScheduleRuleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter, which ScheduleRule to fetch.
+     */
+    where: ScheduleRuleWhereUniqueInput
+  }
+
+  /**
+   * ScheduleRule findUniqueOrThrow
+   */
+  export type ScheduleRuleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter, which ScheduleRule to fetch.
+     */
+    where: ScheduleRuleWhereUniqueInput
+  }
+
+  /**
+   * ScheduleRule findFirst
+   */
+  export type ScheduleRuleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter, which ScheduleRule to fetch.
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduleRules to fetch.
+     */
+    orderBy?: ScheduleRuleOrderByWithRelationInput | ScheduleRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScheduleRules.
+     */
+    cursor?: ScheduleRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduleRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduleRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScheduleRules.
+     */
+    distinct?: ScheduleRuleScalarFieldEnum | ScheduleRuleScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduleRule findFirstOrThrow
+   */
+  export type ScheduleRuleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter, which ScheduleRule to fetch.
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduleRules to fetch.
+     */
+    orderBy?: ScheduleRuleOrderByWithRelationInput | ScheduleRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScheduleRules.
+     */
+    cursor?: ScheduleRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduleRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduleRules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScheduleRules.
+     */
+    distinct?: ScheduleRuleScalarFieldEnum | ScheduleRuleScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduleRule findMany
+   */
+  export type ScheduleRuleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter, which ScheduleRules to fetch.
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduleRules to fetch.
+     */
+    orderBy?: ScheduleRuleOrderByWithRelationInput | ScheduleRuleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScheduleRules.
+     */
+    cursor?: ScheduleRuleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduleRules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduleRules.
+     */
+    skip?: number
+    distinct?: ScheduleRuleScalarFieldEnum | ScheduleRuleScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduleRule create
+   */
+  export type ScheduleRuleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ScheduleRule.
+     */
+    data: XOR<ScheduleRuleCreateInput, ScheduleRuleUncheckedCreateInput>
+  }
+
+  /**
+   * ScheduleRule createMany
+   */
+  export type ScheduleRuleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScheduleRules.
+     */
+    data: ScheduleRuleCreateManyInput | ScheduleRuleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScheduleRule createManyAndReturn
+   */
+  export type ScheduleRuleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScheduleRules.
+     */
+    data: ScheduleRuleCreateManyInput | ScheduleRuleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScheduleRule update
+   */
+  export type ScheduleRuleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ScheduleRule.
+     */
+    data: XOR<ScheduleRuleUpdateInput, ScheduleRuleUncheckedUpdateInput>
+    /**
+     * Choose, which ScheduleRule to update.
+     */
+    where: ScheduleRuleWhereUniqueInput
+  }
+
+  /**
+   * ScheduleRule updateMany
+   */
+  export type ScheduleRuleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScheduleRules.
+     */
+    data: XOR<ScheduleRuleUpdateManyMutationInput, ScheduleRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which ScheduleRules to update
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * Limit how many ScheduleRules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScheduleRule updateManyAndReturn
+   */
+  export type ScheduleRuleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * The data used to update ScheduleRules.
+     */
+    data: XOR<ScheduleRuleUpdateManyMutationInput, ScheduleRuleUncheckedUpdateManyInput>
+    /**
+     * Filter which ScheduleRules to update
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * Limit how many ScheduleRules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScheduleRule upsert
+   */
+  export type ScheduleRuleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ScheduleRule to update in case it exists.
+     */
+    where: ScheduleRuleWhereUniqueInput
+    /**
+     * In case the ScheduleRule found by the `where` argument doesn't exist, create a new ScheduleRule with this data.
+     */
+    create: XOR<ScheduleRuleCreateInput, ScheduleRuleUncheckedCreateInput>
+    /**
+     * In case the ScheduleRule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScheduleRuleUpdateInput, ScheduleRuleUncheckedUpdateInput>
+  }
+
+  /**
+   * ScheduleRule delete
+   */
+  export type ScheduleRuleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+    /**
+     * Filter which ScheduleRule to delete.
+     */
+    where: ScheduleRuleWhereUniqueInput
+  }
+
+  /**
+   * ScheduleRule deleteMany
+   */
+  export type ScheduleRuleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScheduleRules to delete
+     */
+    where?: ScheduleRuleWhereInput
+    /**
+     * Limit how many ScheduleRules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScheduleRule without action
+   */
+  export type ScheduleRuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleRule
+     */
+    select?: ScheduleRuleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduleRule
+     */
+    omit?: ScheduleRuleOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4420,6 +5591,20 @@ export namespace Prisma {
   };
 
   export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+  export const ScheduleRuleScalarFieldEnum: {
+    id: 'id',
+    dayOfWeek: 'dayOfWeek',
+    startMinutes: 'startMinutes',
+    endMinutes: 'endMinutes',
+    active: 'active',
+    label: 'label',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScheduleRuleScalarFieldEnum = (typeof ScheduleRuleScalarFieldEnum)[keyof typeof ScheduleRuleScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4504,6 +5689,13 @@ export namespace Prisma {
    * Reference to a field of type 'AttendanceStatus[]'
    */
   export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -4703,6 +5895,75 @@ export namespace Prisma {
     studentId?: IntWithAggregatesFilter<"Attendance"> | number
   }
 
+  export type ScheduleRuleWhereInput = {
+    AND?: ScheduleRuleWhereInput | ScheduleRuleWhereInput[]
+    OR?: ScheduleRuleWhereInput[]
+    NOT?: ScheduleRuleWhereInput | ScheduleRuleWhereInput[]
+    id?: IntFilter<"ScheduleRule"> | number
+    dayOfWeek?: IntFilter<"ScheduleRule"> | number
+    startMinutes?: IntFilter<"ScheduleRule"> | number
+    endMinutes?: IntFilter<"ScheduleRule"> | number
+    active?: BoolFilter<"ScheduleRule"> | boolean
+    label?: StringNullableFilter<"ScheduleRule"> | string | null
+    createdAt?: DateTimeFilter<"ScheduleRule"> | Date | string
+    updatedAt?: DateTimeFilter<"ScheduleRule"> | Date | string
+  }
+
+  export type ScheduleRuleOrderByWithRelationInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    active?: SortOrder
+    label?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduleRuleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ScheduleRuleWhereInput | ScheduleRuleWhereInput[]
+    OR?: ScheduleRuleWhereInput[]
+    NOT?: ScheduleRuleWhereInput | ScheduleRuleWhereInput[]
+    dayOfWeek?: IntFilter<"ScheduleRule"> | number
+    startMinutes?: IntFilter<"ScheduleRule"> | number
+    endMinutes?: IntFilter<"ScheduleRule"> | number
+    active?: BoolFilter<"ScheduleRule"> | boolean
+    label?: StringNullableFilter<"ScheduleRule"> | string | null
+    createdAt?: DateTimeFilter<"ScheduleRule"> | Date | string
+    updatedAt?: DateTimeFilter<"ScheduleRule"> | Date | string
+  }, "id">
+
+  export type ScheduleRuleOrderByWithAggregationInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    active?: SortOrder
+    label?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScheduleRuleCountOrderByAggregateInput
+    _avg?: ScheduleRuleAvgOrderByAggregateInput
+    _max?: ScheduleRuleMaxOrderByAggregateInput
+    _min?: ScheduleRuleMinOrderByAggregateInput
+    _sum?: ScheduleRuleSumOrderByAggregateInput
+  }
+
+  export type ScheduleRuleScalarWhereWithAggregatesInput = {
+    AND?: ScheduleRuleScalarWhereWithAggregatesInput | ScheduleRuleScalarWhereWithAggregatesInput[]
+    OR?: ScheduleRuleScalarWhereWithAggregatesInput[]
+    NOT?: ScheduleRuleScalarWhereWithAggregatesInput | ScheduleRuleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ScheduleRule"> | number
+    dayOfWeek?: IntWithAggregatesFilter<"ScheduleRule"> | number
+    startMinutes?: IntWithAggregatesFilter<"ScheduleRule"> | number
+    endMinutes?: IntWithAggregatesFilter<"ScheduleRule"> | number
+    active?: BoolWithAggregatesFilter<"ScheduleRule"> | boolean
+    label?: StringNullableWithAggregatesFilter<"ScheduleRule"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ScheduleRule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScheduleRule"> | Date | string
+  }
+
   export type AdminCreateInput = {
     email: string
     password: string
@@ -4877,6 +6138,80 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ScheduleRuleCreateInput = {
+    dayOfWeek: number
+    startMinutes: number
+    endMinutes: number
+    active?: boolean
+    label?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduleRuleUncheckedCreateInput = {
+    id?: number
+    dayOfWeek: number
+    startMinutes: number
+    endMinutes: number
+    active?: boolean
+    label?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduleRuleUpdateInput = {
+    dayOfWeek?: IntFieldUpdateOperationsInput | number
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduleRuleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dayOfWeek?: IntFieldUpdateOperationsInput | number
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduleRuleCreateManyInput = {
+    id?: number
+    dayOfWeek: number
+    startMinutes: number
+    endMinutes: number
+    active?: boolean
+    label?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduleRuleUpdateManyMutationInput = {
+    dayOfWeek?: IntFieldUpdateOperationsInput | number
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduleRuleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dayOfWeek?: IntFieldUpdateOperationsInput | number
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    active?: BoolFieldUpdateOperationsInput | boolean
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5143,6 +6478,66 @@ export namespace Prisma {
     _max?: NestedEnumAttendanceStatusFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type ScheduleRuleCountOrderByAggregateInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    active?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduleRuleAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+  }
+
+  export type ScheduleRuleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    active?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduleRuleMinOrderByAggregateInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    active?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduleRuleSumOrderByAggregateInput = {
+    id?: SortOrder
+    dayOfWeek?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -5221,6 +6616,10 @@ export namespace Prisma {
     upsert?: StudentUpsertWithoutAttendanceInput
     connect?: StudentWhereUniqueInput
     update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutAttendanceInput, StudentUpdateWithoutAttendanceInput>, StudentUncheckedUpdateWithoutAttendanceInput>
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5374,6 +6773,19 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAttendanceStatusFilter<$PrismaModel>
     _max?: NestedEnumAttendanceStatusFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type AttendanceCreateWithoutStudentInput = {
